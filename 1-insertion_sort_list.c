@@ -1,5 +1,4 @@
 #include "sort.h"
-/*#include <stdio.h>*/
 
 /**
  * insertion_sort_list - Sorts a doubly linked list in ascending order using Insertion Sort
@@ -7,14 +6,15 @@
  * @list: Pointer to the head of the doubly linked list
  */
 void insertion_sort_list(listint_t **list) {
+	listint_t *current = (*list)->next;
     if (list == NULL || *list == NULL || (*list)->next == NULL)
         return;
-
-    listint_t *current = (*list)->next;
 
     while (current != NULL) {
         listint_t *temp = current;
         listint_t *prev = current->prev;
+
+       /* listint_t *next_node = NULL;*/
 
         while (prev != NULL && prev->n > temp->n) {
             /* Swap nodes*/
@@ -44,3 +44,4 @@ void insertion_sort_list(listint_t **list) {
         current = current->next;
     }
 }
+
