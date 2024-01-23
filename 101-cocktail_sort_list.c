@@ -1,59 +1,52 @@
 #include "sort.h"
 
-/**
- * swap_nodes - Swaps two nodes in a doubly linked list
- * @node1: First node to be swapped
- * @node2: Second node to be swapped
- */
-void swap_nodes(listint_t *node1, listint_t *node2) {
-    if (node1 == NULL || node2 == NULL)
-        return;
+void quick_sort_recursive(int *array, int low, int high, size_t size);
 
-    if (node1->prev != NULL)
-        node1->prev->next = node2;
-    if (node2->next != NULL)
-        node2->next->prev = node1;
+void quick_sort(int *array, size_t size)
+{
+	if (array == NULL || size < 2)
+		return;
 
-    node1->next = node2->next;
-    node2->prev = node1->prev;
-    node1->prev = node2;
-    node2->next = node1;
+	quick_sort_recursive(array, 0, size - 1, size);
 }
 
-/**
- * cocktail_sort_list - Sorts a doubly linked list of integers in ascending order
- *                      using Cocktail shaker sort algorithm.
- * @list: Double pointer to the head of the doubly linked list
- */
-void cocktail_sort_list(listint_t **list) {
-    int swapped;
-    listint_t *current;
+int partition(int *array, int low, int high, size_t size)
+{
+	int i = low - 1, j = low;
+	int pivot = array[high], temp = 0;
 
-    if (list == NULL || *list == NULL || (*list)->next == NULL)
-        return;
+	for (; j < high; j++)
+	{
+		if (array[j] < pivot)
+		{
+			i++;
+			if (array[i] != array[j])
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+				print_array(array, size);
+			}
+		}
+	}
+	if (array[i + 1] != array[high])
+	{
+		temp = array[i + 1];
+		array[i + 1] = array[high];
+		array[high] = temp;
+		print_array(array, size);
+	}
+	return (i + 1);
+}
 
-    do {
-        swapped = 0;
-        /* Forward pass (left to right) */
-        for (current = *list; current->next != NULL; current = current->next) {
-            if (current->n > current->next->n) {
-                swap_nodes(current, current->next);
-                print_list(*list);
-                swapped = 1;
-            }
-        }
+void quick_sort_recursive(int *array, int low, int high, size_t size)
+{
+	int pivot;
 
-        if (swapped == 0)
-            break;
-
-        swapped = 0;
-        /* Backward pass (right to left) */
-        for (; current->prev != NULL; current = current->prev) {
-            if (current->n < current->prev->n) {
-                swap_nodes(current->prev, current);
-                print_list(*list);
-                swapped = 1;
-            }
-        }
-    } while (swapped);
+	if (low < high)
+	{
+		pivot = partition(array, low, high, size);
+		quick_sort_recursive(array, low, pivot - 1, size);
+		quick_sort_recursive(array, pivot + 1, high, size);
+	}
 }
