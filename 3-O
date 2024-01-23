@@ -1,0 +1,6 @@
+
+The time complexity of the Quick Sort algorithm (with the Lomuto partition scheme-
+
+In the best case: O(n log n)
+In the average case: O(n log n)
+In the worst case: O(n^2)
