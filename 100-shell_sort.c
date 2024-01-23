@@ -1,8 +1,7 @@
 #include "sort.h"
 
 void shell_sort(int *array, size_t size) {
-    size_t i = 0, j = 0, gap = 0;
-    
+    size_t i, j, gap = 1;
     if (array == NULL || size < 2)
         return;
 
@@ -22,10 +21,8 @@ void shell_sort(int *array, size_t size) {
             array[j] = temp;
         }
 
-        print_array(array, size);
-
         gap /= 3;
-    }
 
-    print_array(array, size);
+        print_array(array, size);
+    }
 }
